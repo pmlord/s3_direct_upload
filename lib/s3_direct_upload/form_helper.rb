@@ -25,7 +25,8 @@ module S3DirectUpload
           callback_method: "POST",
           callback_param: "file",
           key_starts_with: @key_starts_with,
-          key: key
+          key: key,
+          s3_headers: {}
         )
       end
 
