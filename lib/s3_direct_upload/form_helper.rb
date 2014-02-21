@@ -53,7 +53,7 @@ module S3DirectUpload
           :signature => signature,
           :success_action_status => "201",
           'X-Requested-With' => 'xhr'
-        }
+        }.reverse_merge @options[:s3_headers]
       end
 
       def key
@@ -80,7 +80,7 @@ module S3DirectUpload
             {bucket: @options[:bucket]},
             {acl: @options[:acl]},
             {success_action_status: "201"}
-          ] + (@options[:conditions] || [])
+          ] + (@options[:conditions] || []) + @options[:s3_headers].map{|k,v| ['starts-with', ('$' + k.to_s), v.to_s]  }
         }
       end
 
